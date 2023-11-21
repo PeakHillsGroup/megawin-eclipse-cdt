@@ -30,6 +30,8 @@ import org.eclipse.cdt.managedbuilder.internal.core.MultiConfiguration;
 import org.eclipse.cdt.managedbuilder.ui.properties.AbstractCBuildPropertyTab;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.embedcdt.core.CProjectPacksStorage;
 import org.eclipse.embedcdt.core.EclipseUtils;
 import org.eclipse.embedcdt.core.JsonUtils;
@@ -72,6 +74,7 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
+import org.osgi.service.prefs.BackingStoreException;
 
 /**
  * @noextend This class is not intended to be sub-classed by clients.
@@ -81,8 +84,6 @@ import org.json.simple.parser.ParseException;
 public class TabDevices extends AbstractCBuildPropertyTab {
 
 	private static final int AUTOEXPAND_LEVEL = 2;
-
-	public static String DEVICE_NAME = "";
 
 	// ------------------------------------------------------------------------
 
@@ -649,7 +650,7 @@ public class TabDevices extends AbstractCBuildPropertyTab {
 			fSelectedBoardDeviceNode = node;
 		} else {
 			fSelectedDeviceNode = node;
-			DEVICE_NAME = fSelectedDeviceNode.getName();
+			storeValue(fSelectedDeviceNode.getName());
 		}
 
 		Map<String, String[]> map = collectMemoryMap(fSelectedDeviceNode);
@@ -1225,5 +1226,16 @@ public class TabDevices extends AbstractCBuildPropertyTab {
 		}
 
 		return devicesRoot;
+	}
+
+	private void storeValue(String mcuName) {
+
+		IEclipsePreferences preferences = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID);
+		preferences.put(MCUVariableResolver.MEGA_MCU_NAME, mcuName);
+		try {
+			preferences.flush();
+		} catch (BackingStoreException e) {
+			e.printStackTrace();
+		}
 	}
 }

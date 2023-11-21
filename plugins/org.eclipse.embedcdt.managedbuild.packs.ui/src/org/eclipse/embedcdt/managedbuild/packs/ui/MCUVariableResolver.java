@@ -3,8 +3,11 @@ package org.eclipse.embedcdt.managedbuild.packs.ui;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.variableresolvers.PathVariableResolver;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.core.variables.IDynamicVariable;
 import org.eclipse.core.variables.IDynamicVariableResolver;
+import org.eclipse.embedcdt.internal.managedbuild.packs.ui.Activator;
 
 public class MCUVariableResolver extends PathVariableResolver implements IDynamicVariableResolver {
 
@@ -22,7 +25,8 @@ public class MCUVariableResolver extends PathVariableResolver implements IDynami
 		String varName = variable.getName();
 
 		if (varName.equals(MEGA_MCU_NAME)) {
-			return TabDevices.DEVICE_NAME;
+			IEclipsePreferences preferences = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID);
+			return preferences.get(MEGA_MCU_NAME, EMPTY_STRING);
 		}
 
 		return EMPTY_STRING;
