@@ -57,5 +57,18 @@
 			name="%views.packs.docs">
 		</view>
 	</extension>
+	<extension point="org.eclipse.core.resources.variableResolvers">
+    	<variableResolver
+          	class="org.eclipse.embedcdt.managedbuild.packs.ui.MCUVariableResolver"
+          	variable="mega_mcu_name">
+    	</variableResolver>
+ 	</extension>
+	<extension point="org.eclipse.core.variables.dynamicVariables">
+    	<variable
+          	description="Project Selected Device"
+          	name="mega_mcu_name"
+          	resolver="org.eclipse.embedcdt.managedbuild.packs.ui.MCUVariableResolver">
+    	</variable>
+ 	</extension>
 
 </plugin>

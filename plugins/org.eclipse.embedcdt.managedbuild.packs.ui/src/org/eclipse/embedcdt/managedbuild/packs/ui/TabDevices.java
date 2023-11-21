@@ -82,6 +82,8 @@ public class TabDevices extends AbstractCBuildPropertyTab {
 
 	private static final int AUTOEXPAND_LEVEL = 2;
 
+	public static String DEVICE_NAME = "";
+
 	// ------------------------------------------------------------------------
 
 	class DevicesContentProvider extends NodeViewContentProvider {
@@ -646,8 +648,8 @@ public class TabDevices extends AbstractCBuildPropertyTab {
 			}
 			fSelectedBoardDeviceNode = node;
 		} else {
-			// System.out.println("Device " + element);
 			fSelectedDeviceNode = node;
+			DEVICE_NAME = fSelectedDeviceNode.getName();
 		}
 
 		Map<String, String[]> map = collectMemoryMap(fSelectedDeviceNode);
