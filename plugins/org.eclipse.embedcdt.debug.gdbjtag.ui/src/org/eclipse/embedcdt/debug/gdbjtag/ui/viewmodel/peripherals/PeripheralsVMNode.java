@@ -250,7 +250,7 @@ public class PeripheralsVMNode extends AbstractDMVMNode
 							fPeripherals = getData();
 							fillUpdateWithVMCs(update, fPeripherals);
 
-							addPersistentPeripherals(containerDMContext);
+							//addPersistentPeripherals(containerDMContext);
 
 							update.done();
 						} else {
